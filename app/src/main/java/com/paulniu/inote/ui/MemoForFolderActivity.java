@@ -1,14 +1,22 @@
 package com.paulniu.inote.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.niupuyue.mylibrary.base.BaseActivity;
+import com.niupuyue.mylibrary.utils.CustomToastUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
 import com.paulniu.inote.R;
+import com.paulniu.inote.adapter.MemoAdapter;
+import com.paulniu.inote.callback.FolderItemClickListener;
+import com.paulniu.inote.data.FolderModel;
 import com.paulniu.inote.data.MemoModel;
 
 import java.util.ArrayList;
@@ -23,6 +31,14 @@ import java.util.List;
  */
 public class MemoForFolderActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final String EXTRA_INT_FOLDERID = "folderId";
+
+    public static Intent getIntent(Context context, FolderModel folderModel) {
+        Intent intent = new Intent(context, MemoForFolderActivity.class);
+        intent.putExtra(EXTRA_INT_FOLDERID, folderModel.getFolderId());
+        return intent;
+    }
+
     private ImageView back;
     private TextView title;
     private RecyclerView recyclerview;
@@ -30,6 +46,7 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
     private ImageView ivMeomoFolderActivityAddmemo;
 
     private List<MemoModel> memoModelList = new ArrayList<>();
+    private MemoAdapter adapter;
 
     @Override
     public int getLayoutId() {
@@ -48,6 +65,35 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
     @Override
     public void initViewListener() {
         ListenerUtility.setOnClickListener(this, back, ivMeomoFolderActivityAddmemo);
+    }
+
+    @Override
+    public void initDataAfterListener() {
+        adapter = new MemoAdapter();
+        adapter.setFolderItemClickListener(new FolderItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                CustomToastUtility.makeTextError("点击了第" + position + "个备忘录");
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                CustomToastUtility.makeTextError("长摁了第" + position + "个备忘录");
+            }
+        });
+        for (int i = 0; i < 50; i++) {
+            MemoModel model = new MemoModel();
+            model.setContent("内容" + i + 1);
+            model.setDate("2019年08月15日21:00:43");
+            model.setFolderName("文件夹" + i + 1);
+            model.setTitle("标题" + i + 1);
+            memoModelList.add(model);
+        }
+        adapter.setMemoModels(memoModelList);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerview.addItemDecoration(dividerItemDecoration);
+        recyclerview.setAdapter(adapter);
     }
 
     @Override

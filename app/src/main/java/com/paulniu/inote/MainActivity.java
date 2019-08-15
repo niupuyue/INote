@@ -18,6 +18,7 @@ import com.paulniu.inote.adapter.FolderAdapter;
 import com.paulniu.inote.callback.AddFolderDialogListener;
 import com.paulniu.inote.callback.FolderItemClickListener;
 import com.paulniu.inote.data.FolderModel;
+import com.paulniu.inote.ui.MemoForFolderActivity;
 import com.paulniu.inote.widget.AddFolderDialog;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onItemClick(View view, int position) {
         if (!BaseUtility.isEmpty(folderModelList)) {
-            CustomToastUtility.makeTextSucess("点击的是第" + position + "个文件夹");
+            startActivity(MemoForFolderActivity.getIntent(this, folderModelList.get(position)));
         }
     }
 
