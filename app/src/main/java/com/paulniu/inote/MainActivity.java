@@ -13,9 +13,12 @@ import com.niupuyue.mylibrary.base.BaseActivity;
 import com.niupuyue.mylibrary.utils.BaseUtility;
 import com.niupuyue.mylibrary.utils.CustomToastUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
+import com.niupuyue.mylibrary.widgets.BaseDialog;
 import com.paulniu.inote.adapter.FolderAdapter;
+import com.paulniu.inote.callback.AddFolderDialogListener;
 import com.paulniu.inote.callback.FolderItemClickListener;
 import com.paulniu.inote.data.FolderModel;
+import com.paulniu.inote.widget.AddFolderDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,12 +78,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
+    public void showAddFolderDialog() {
+        AddFolderDialog dialog = new AddFolderDialog();
+        dialog.setAddFolderDialogListener(new AddFolderDialogListener() {
+            @Override
+            public void onAddFolderConfirm(String folderName) {
+                CustomToastUtility.makeTextSucess(folderName);
+            }
+
+            @Override
+            public void onAddFolderCancel() {
+
+            }
+        });
+        dialog.show(getSupportFragmentManager(), this.getClass().getName());
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvMainActivityCreateFolder:
                 // 显示弹窗dialog
-
+                showAddFolderDialog();
                 break;
         }
     }
