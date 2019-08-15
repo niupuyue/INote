@@ -80,6 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.tvMainActivityCreateFolder:
                 // 显示弹窗dialog
+
                 break;
         }
     }
