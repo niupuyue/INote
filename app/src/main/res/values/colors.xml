@@ -2,6 +2,7 @@
 <resources>
     <!-- 主题颜色 -->
     <color name="colorPrimary">#ffda47</color>
-
+    <color name="colorPrimaryDark">#d9ba3c</color>
+    <color name="color_333">#333333</color>
 
 </resources>

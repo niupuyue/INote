@@ -2,5 +2,7 @@
     <!-- App基本字符创 -->
     <string name="app_name">备忘录</string>
 
+    <string name="MainActivity_create_floder">新建文件夹</string>
+    <string name="MainActivity_floder_title">文件夹</string>
 
 </resources>
