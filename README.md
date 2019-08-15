@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/xiaoniudadi/INote">
-    <img src="images/ic_launcher.png" width="750px">
+    <img src="images/ic_launcher.png" width="200px">
   </a>
 </p>
 
