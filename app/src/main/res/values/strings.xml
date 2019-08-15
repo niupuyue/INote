@@ -9,5 +9,6 @@
     <string name="AddFolderDialog_hint">名称</string>
     <string name="app_cancel">取消</string>
     <string name="app_confirm">确定</string>
+    <string name="MemoFolderActivity_counts">%s个备忘录</string>
 
 </resources>
