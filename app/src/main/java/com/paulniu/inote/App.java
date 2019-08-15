@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.niupuyue.mylibrary.utils.LibraryConstants;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Coder: niupuyue
@@ -26,5 +27,16 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         LibraryConstants.setContext(this);
+        // 初始化leakCanary
+        initLeakCanary(this);
+    }
+
+    public void initLeakCanary(Application app) {
+        if (LeakCanary.isInAnalyzerProcess(app)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(app);
     }
 }

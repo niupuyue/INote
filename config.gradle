@@ -1,0 +1,23 @@
+// gradle全局配置文件
+
+// 定义所有的project参数
+ext {
+    android = [
+            compileSdk : 28,
+            buildTools : "28.0.3",
+            minSdk     : 19,
+            minLimitSdk: 19,  // 限制低版本用户安装
+            targetSdk  : 28,
+    ]
+
+    dependencies = [
+            junit                : '4.12',
+            supportLibraryVersion: '28.0.0',
+            supportParentVersion : '25.3.1',
+            IYingLibrary         : '0.0.13',
+            leakcanary           : '1.5.4',
+            log                  : '2.2.0',
+            rxpermission         : '0.10.2',
+    ]
+}
+
