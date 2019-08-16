@@ -15,13 +15,35 @@ public class FolderModel {
 
     private int folderNumbers;
 
-    public FolderModel() {
-    }
+    private String folderDate;
 
-    public FolderModel(int folderId, String folderName, int folderNumbers) {
+    private int folderType;
+
+    public FolderModel(int folderId, String folderName, int folderNumbers, String folderDate, int folderType) {
         this.folderId = folderId;
         this.folderName = folderName;
         this.folderNumbers = folderNumbers;
+        this.folderDate = folderDate;
+        this.folderType = folderType;
+    }
+
+    public FolderModel() {
+    }
+
+    public String getFolderDate() {
+        return folderDate;
+    }
+
+    public int getFolderType() {
+        return folderType;
+    }
+
+    public void setFolderType(int folderType) {
+        this.folderType = folderType;
+    }
+
+    public void setFolderDate(String folderDate) {
+        this.folderDate = folderDate;
     }
 
     public int getFolderId() {

@@ -5,19 +5,23 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.niupuyue.mylibrary.base.BaseActivity;
+import com.niupuyue.mylibrary.callbacks.ISimpleDialogButtonClickCallback;
 import com.niupuyue.mylibrary.utils.BaseUtility;
 import com.niupuyue.mylibrary.utils.CustomToastUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
 import com.niupuyue.mylibrary.widgets.BaseDialog;
+import com.niupuyue.mylibrary.widgets.SimpleDialog;
 import com.paulniu.inote.adapter.FolderAdapter;
 import com.paulniu.inote.callback.AddFolderDialogListener;
 import com.paulniu.inote.callback.FolderItemClickListener;
 import com.paulniu.inote.data.FolderModel;
+import com.paulniu.inote.db.FolderDao;
 import com.paulniu.inote.ui.MemoForFolderActivity;
 import com.paulniu.inote.widget.AddFolderDialog;
 
@@ -73,9 +77,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Override
-    public void onItemLongClick(View view, int position) {
+    public void onItemLongClick(View view, final int position) {
         if (!BaseUtility.isEmpty(folderModelList)) {
-            CustomToastUtility.makeTextSucess("长恩的是第" + position + "个文件夹");
+            SimpleDialog.showSimpleDialog(this, getString(R.string.MainActivity_delete_folder), new ISimpleDialogButtonClickCallback() {
+                @Override
+                public void onLeftButtonClick() {
+
+                }
+
+                @Override
+                public void onRightButtonClick() {
+                    // 删除该文件夹
+                    deleteFolder(folderModelList.get(position));
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+            });
         }
     }
 
@@ -84,7 +104,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         dialog.setAddFolderDialogListener(new AddFolderDialogListener() {
             @Override
             public void onAddFolderConfirm(String folderName) {
-                CustomToastUtility.makeTextSucess(folderName);
+                addFolder(folderName);
             }
 
             @Override
@@ -93,6 +113,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
         dialog.show(getSupportFragmentManager(), this.getClass().getName());
+    }
+
+    /**
+     * 添加文件夹
+     *
+     * @param folderName
+     */
+    private void addFolder(String folderName) {
+        FolderDao folderDao = new FolderDao(this);
+        long insertCount = folderDao.insertFolder(folderName);
+        if (insertCount > 0){
+            CustomToastUtility.makeTextSucess("插入成功！");
+        }else {
+            CustomToastUtility.makeTextError("插入失败！");
+        }
+    }
+
+    /**
+     * 删除文件夹
+     */
+    private void deleteFolder(FolderModel folderModel) {
+        FolderDao folderDao = new FolderDao(this);
+        folderModelList = folderDao.getAllFolders();
+        if (adapter != null){
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

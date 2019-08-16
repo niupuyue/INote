@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.niupuyue.mylibrary.base.BaseActivity;
+import com.niupuyue.mylibrary.utils.BaseUtility;
 import com.niupuyue.mylibrary.utils.CustomToastUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
 import com.paulniu.inote.R;
@@ -73,7 +74,9 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
         adapter.setFolderItemClickListener(new FolderItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                CustomToastUtility.makeTextError("点击了第" + position + "个备忘录");
+                if (!BaseUtility.isEmpty(memoModelList)) {
+                    startActivity(EditMemoActivity.getIntent(MemoForFolderActivity.this, memoModelList.get(position)));
+                }
             }
 
             @Override
