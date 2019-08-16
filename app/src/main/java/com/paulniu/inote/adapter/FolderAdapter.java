@@ -21,7 +21,7 @@ import java.util.List;
  * Coder: niupuyue
  * Date: 2019/8/15
  * Time: 16:56
- * Desc:
+ * Desc: 文件夹adapter
  * Version:
  */
 public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder> implements View.OnClickListener, View.OnLongClickListener {
@@ -75,6 +75,17 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
             tv_recyclerview_item_folder_name = itemView.findViewById(R.id.tv_recyclerview_item_folder_name);
             tv_recyclerview_item_folder_nums = itemView.findViewById(R.id.tv_recyclerview_item_folder_nums);
         }
+    }
+
+    public void addData(int position, FolderModel folderModel) {
+        if (BaseUtility.isEmpty(folderModels)) {
+            folderModels = new ArrayList<>();
+        }
+        if (position < 0){
+            position = BaseUtility.isEmpty(folderModels) ? 0 : BaseUtility.size(folderModels) - 1;
+        }
+        folderModels.add(position, folderModel);
+        notifyItemChanged(position);
     }
 
     @Override

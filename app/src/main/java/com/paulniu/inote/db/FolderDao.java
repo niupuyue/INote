@@ -88,4 +88,22 @@ public class FolderDao {
         return folderModels;
     }
 
+    /**
+     * 删除某个文件夹
+     */
+    public int deleteFolder(int folderId) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        int ret = 0;
+        try {
+            ret = db.delete("i_folder", "folder_id=?", new String[]{String.valueOf(folderId)});
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return ret;
+    }
+
 }

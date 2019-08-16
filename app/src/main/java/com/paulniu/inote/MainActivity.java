@@ -34,6 +34,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private TextView tvMainActivityCreateFolder;
     private FolderAdapter adapter;
     private List<FolderModel> folderModelList = new ArrayList<>();
+    private FolderDao folderDao;
 
     @Override
     public int getLayoutId() {
@@ -53,15 +54,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void initDataAfterListener() {
+        folderDao = new FolderDao(this);
         adapter = new FolderAdapter();
         adapter.setFolderClickListener(this);
-        for (int i = 0; i < 50; i++) {
-            FolderModel model = new FolderModel();
-            model.setFolderId(i + 100);
-            model.setFolderName("文件夹" + i);
-            model.setFolderNumbers(11 + i);
-            folderModelList.add(model);
-        }
+        folderModelList = folderDao.getAllFolders();
         adapter.setFolderModels(folderModelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -121,11 +117,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * @param folderName
      */
     private void addFolder(String folderName) {
-        FolderDao folderDao = new FolderDao(this);
         long insertCount = folderDao.insertFolder(folderName);
-        if (insertCount > 0){
+        if (insertCount > 0) {
             CustomToastUtility.makeTextSucess("插入成功！");
-        }else {
+        } else {
             CustomToastUtility.makeTextError("插入失败！");
         }
     }
@@ -134,10 +129,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * 删除文件夹
      */
     private void deleteFolder(FolderModel folderModel) {
-        FolderDao folderDao = new FolderDao(this);
-        folderModelList = folderDao.getAllFolders();
-        if (adapter != null){
-            adapter.notifyDataSetChanged();
+        int ret = folderDao.deleteFolder(folderModel.getFolderId());
+        if (ret > 0) {
+            CustomToastUtility.makeTextSucess("删除成功！");
+        } else {
+            CustomToastUtility.makeTextError("删除失败！");
         }
     }
 

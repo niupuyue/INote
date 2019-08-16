@@ -48,6 +48,7 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
 
     private List<MemoModel> memoModelList = new ArrayList<>();
     private MemoAdapter adapter;
+    private FolderModel folderModel;
 
     @Override
     public int getLayoutId() {
