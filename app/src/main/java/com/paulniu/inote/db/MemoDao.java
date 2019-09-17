@@ -3,6 +3,9 @@ package com.paulniu.inote.db;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
+
+import com.niupuyue.mylibrary.utils.TimeUtility;
 
 /**
  * Coder: niupuyue
@@ -37,6 +40,49 @@ public class MemoDao {
             ex.printStackTrace();
         }
         return count;
+    }
+
+    /**
+     * 新建一个文件
+     */
+    public long insertMemo(String fileTitle, String fileContent, int folderId) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String sql = "insert into i_memo(memo_title,memo_content,folder_id,memo_create_date) values (?,?,?,?)";
+        long ret = 0;
+        SQLiteStatement statement = db.compileStatement(sql);
+        db.beginTransaction();
+        try {
+            statement.bindString(1, fileTitle);
+            statement.bindString(2, fileContent);
+            statement.bindLong(3, folderId);
+            statement.bindString(4, TimeUtility.convertToString(System.currentTimeMillis(), TimeUtility.TIME_FORMAT));
+            ret = statement.executeInsert();
+            db.setTransactionSuccessful();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.endTransaction();
+            db.close();
+        }
+        return ret;
+    }
+
+    /**
+     * 删除一个文件
+     */
+    public int deleteMemo(int fileId) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        int ret = 0;
+        try {
+            ret = db.delete("i_memo", "memo_id=?", new String[]{String.valueOf(fileId)});
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (null != db) {
+                db.close();
+            }
+        }
+        return ret;
     }
 
 }
