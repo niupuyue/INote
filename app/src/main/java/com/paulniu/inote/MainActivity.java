@@ -1,12 +1,11 @@
 package com.paulniu.inote;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.database.Cursor;
-import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +14,6 @@ import com.niupuyue.mylibrary.callbacks.ISimpleDialogButtonClickCallback;
 import com.niupuyue.mylibrary.utils.BaseUtility;
 import com.niupuyue.mylibrary.utils.CustomToastUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
-import com.niupuyue.mylibrary.widgets.BaseDialog;
 import com.niupuyue.mylibrary.widgets.SimpleDialog;
 import com.paulniu.inote.adapter.FolderAdapter;
 import com.paulniu.inote.callback.AddFolderDialogListener;
@@ -28,13 +26,16 @@ import com.paulniu.inote.widget.AddFolderDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, FolderItemClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, FolderItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private TextView tvMainActivityCreateFolder;
     private FolderAdapter adapter;
     private List<FolderModel> folderModelList = new ArrayList<>();
     private FolderDao folderDao;
+    private SwipeRefreshLayout swipeRefresh;
+
+    private Handler mHandler = new Handler();
 
     @Override
     public int getLayoutId() {
@@ -45,11 +46,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void initViewById() {
         recyclerView = findViewById(R.id.recyclerView);
         tvMainActivityCreateFolder = findViewById(R.id.tvMainActivityCreateFolder);
+        swipeRefresh = findViewById(R.id.swipeRefresh);
     }
 
     @Override
     public void initViewListener() {
         ListenerUtility.setOnClickListener(this, tvMainActivityCreateFolder);
+        ListenerUtility.setOnRefreshListener(this,swipeRefresh);
+        swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     @Override
@@ -120,6 +126,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         long insertCount = folderDao.insertFolder(folderName);
         if (insertCount > 0) {
             CustomToastUtility.makeTextSucess("插入成功！");
+            swipeRefresh.setRefreshing(true);
+            onRefresh();
         } else {
             CustomToastUtility.makeTextError("插入失败！");
         }
@@ -132,8 +140,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         int ret = folderDao.deleteFolder(folderModel.getFolderId());
         if (ret > 0) {
             CustomToastUtility.makeTextSucess("删除成功！");
+            swipeRefresh.setRefreshing(true);
+            onRefresh();
         } else {
             CustomToastUtility.makeTextError("删除失败！");
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        if (null != mHandler){
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // 清空原有数据
+                    folderModelList.clear();
+                    folderModelList = folderDao.getAllFolders();
+                    adapter.setFolderModels(folderModelList);
+                    adapter.notifyDataSetChanged();
+                    swipeRefresh.setRefreshing(false);
+                }
+            },2000);
         }
     }
 
@@ -146,4 +173,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
         }
     }
+
 }
