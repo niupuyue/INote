@@ -6,6 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import com.niupuyue.mylibrary.utils.TimeUtility;
+import com.paulniu.inote.data.MemoModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Coder: niupuyue
@@ -40,6 +44,42 @@ public class MemoDao {
             ex.printStackTrace();
         }
         return count;
+    }
+
+    /**
+     * 根据folderId查询所有的备忘录目录
+     */
+    public List<MemoModel> getMemoByFolderId(int folderId){
+        if (folderId <0){
+            return null;
+        }
+        SQLiteDatabase db = helper.getWritableDatabase();
+        List<MemoModel> memoModels = new ArrayList<>();
+        String sql = "select * from i_memo where folder_id = ?";
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(sql,new String[]{String.valueOf(folderId)});
+            MemoModel memoModel;
+            while (cursor.moveToNext()){
+                memoModel = new MemoModel();
+                memoModel.setMemoId(cursor.getInt(cursor.getColumnIndex("memo_id")));
+                memoModel.setTitle(cursor.getString(cursor.getColumnIndex("memo_title")));
+                memoModel.setContent(cursor.getString(cursor.getColumnIndex("memo_content")));
+                memoModel.setDate(cursor.getString(cursor.getColumnIndex("memo_create_date")));
+                memoModel.setFolderId(cursor.getInt(cursor.getColumnIndex("folder_id")));
+                memoModels.add(memoModel);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            if (null != cursor){
+                cursor.close();
+            }
+            if (null != db){
+                db.close();
+            }
+        }
+        return memoModels;
     }
 
     /**

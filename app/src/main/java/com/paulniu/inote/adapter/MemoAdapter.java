@@ -47,7 +47,6 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> im
         BaseUtility.setText(holder.memoTitle, model.getTitle());
         BaseUtility.setText(holder.memoDate, model.getDate());
         BaseUtility.setText(holder.memoContent, model.getContent());
-        BaseUtility.setText(holder.memoFolderName, model.getFolderName());
     }
 
     @Override

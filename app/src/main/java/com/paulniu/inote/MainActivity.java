@@ -22,6 +22,9 @@ import com.paulniu.inote.data.FolderModel;
 import com.paulniu.inote.db.FolderDao;
 import com.paulniu.inote.ui.MemoForFolderActivity;
 import com.paulniu.inote.widget.AddFolderDialog;
+import com.paulniu.library.GeneralDialog;
+import com.paulniu.library.callbacks.IBaseDialogClickCallback;
+import com.squareup.haha.perflib.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void initViewListener() {
         ListenerUtility.setOnClickListener(this, tvMainActivityCreateFolder);
-        ListenerUtility.setOnRefreshListener(this,swipeRefresh);
+        ListenerUtility.setOnRefreshListener(this, swipeRefresh);
         swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
@@ -81,20 +84,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onItemLongClick(View view, final int position) {
         if (!BaseUtility.isEmpty(folderModelList)) {
-            SimpleDialog.showSimpleDialog(this, getString(R.string.MainActivity_delete_folder), new ISimpleDialogButtonClickCallback() {
+            GeneralDialog.dialogWithTwoBtn(MainActivity.this, "提示", getString(R.string.MainActivity_delete_folder), new IBaseDialogClickCallback() {
                 @Override
-                public void onLeftButtonClick() {
-
-                }
-
-                @Override
-                public void onRightButtonClick() {
+                public void onClickPositive() {
                     // 删除该文件夹
                     deleteFolder(folderModelList.get(position));
                 }
 
                 @Override
-                public void onCancel() {
+                public void onClickNegative() {
 
                 }
             });
@@ -149,7 +147,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onRefresh() {
-        if (null != mHandler){
+        if (null != mHandler) {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -160,7 +158,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     adapter.notifyDataSetChanged();
                     swipeRefresh.setRefreshing(false);
                 }
-            },2000);
+            }, 2000);
         }
     }
 

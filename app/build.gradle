@@ -33,13 +33,11 @@ dependencies {
     api "com.android.support:recyclerview-v7:$rootProject.ext.dependencies.supportLibraryVersion"
 
     api "com.github.xiaoniudadi:IYingLibrary:$rootProject.ext.dependencies.IYingLibrary"
+    api "com.github.niupuyue:YDialog:$rootProject.ext.dependencies.ydialog"
     api "com.orhanobut:logger:$rootProject.ext.dependencies.log"
     api "com.github.tbruyelle:rxpermissions:$rootProject.ext.dependencies.rxpermission"
-
-    //图片加载框架 https://github.com/bumptech/glide
-    api 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-
+    api "com.github.bumptech.glide:glide:$rootProject.ext.dependencies.glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.dependencies.glide"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.dependencies.leakcanary"
 }

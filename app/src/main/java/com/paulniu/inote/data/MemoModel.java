@@ -17,16 +17,13 @@ public class MemoModel {
 
     private String content;
 
-    private String folderName;
-
     private String date;
 
-    public MemoModel(int memoId, int folderId, String title, String content, String folderName, String date) {
+    public MemoModel(int memoId, int folderId, String title, String content, String date) {
         this.memoId = memoId;
         this.folderId = folderId;
         this.title = title;
         this.content = content;
-        this.folderName = folderName;
         this.date = date;
     }
 
@@ -65,13 +62,6 @@ public class MemoModel {
         this.content = content;
     }
 
-    public String getFolderName() {
-        return folderName;
-    }
-
-    public void setFolderName(String folderName) {
-        this.folderName = folderName;
-    }
 
     public String getDate() {
         return date;
@@ -88,7 +78,6 @@ public class MemoModel {
                 ", folderId=" + folderId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", folderName='" + folderName + '\'' +
                 ", date='" + date + '\'' +
                 '}';
     }
