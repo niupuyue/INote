@@ -89,6 +89,37 @@ public class FolderDao {
     }
 
     /**
+     * 根据folderid查询到folder对象
+     */
+    public FolderModel getFolderById(int folderId) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        FolderModel folderModel = null;
+        String sql = "select * from i_folder where folder_id = " + folderId;
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(sql, null);
+            while (cursor.moveToNext()) {
+                folderModel = new FolderModel();
+                folderModel.setFolderId(cursor.getInt(cursor.getColumnIndex("folder_id")));
+                folderModel.setFolderName(cursor.getString(cursor.getColumnIndex("folder_name")));
+                folderModel.setFolderDate(cursor.getString(cursor.getColumnIndex("folder_create_date")));
+                folderModel.setFolderType(cursor.getInt(cursor.getColumnIndex("folder_type")));
+                folderModel.setFolderNumbers(memoDao.getMemoCountByFolder(folderId));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+            if (null != db) {
+                db.close();
+            }
+        }
+        return folderModel;
+    }
+
+    /**
      * 删除某个文件夹
      */
     public int deleteFolder(int folderId) {

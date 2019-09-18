@@ -57,7 +57,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         FolderModel model = folderModels.get(position);
         holder.itemView.setTag(position);
         BaseUtility.setText(holder.tv_recyclerview_item_folder_name, model.getFolderName());
-        BaseUtility.setText(holder.tv_recyclerview_item_folder_nums, model.getFolderNumbers());
+        BaseUtility.setText(holder.tv_recyclerview_item_folder_nums, mContext.getString(R.string.MemoFolderActivity_counts,String.valueOf(model.getFolderNumbers())));
     }
 
     @Override

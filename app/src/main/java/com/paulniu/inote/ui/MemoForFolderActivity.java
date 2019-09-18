@@ -2,6 +2,7 @@ package com.paulniu.inote.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ import com.paulniu.inote.adapter.MemoAdapter;
 import com.paulniu.inote.callback.FolderItemClickListener;
 import com.paulniu.inote.data.FolderModel;
 import com.paulniu.inote.data.MemoModel;
+import com.paulniu.inote.db.FolderDao;
+import com.paulniu.inote.db.MemoDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ import java.util.List;
 public class MemoForFolderActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String EXTRA_INT_FOLDERID = "folderId";
+    private static final String EXTRA_OBJECT_FOLDER = "folder";
 
     public static Intent getIntent(Context context, FolderModel folderModel) {
         Intent intent = new Intent(context, MemoForFolderActivity.class);
@@ -49,6 +53,8 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
     private List<MemoModel> memoModelList = new ArrayList<>();
     private MemoAdapter adapter;
     private FolderModel folderModel;
+    private FolderDao folderDao;
+    private MemoDao memoDao;
 
     @Override
     public int getLayoutId() {
@@ -71,6 +77,14 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void initDataAfterListener() {
+        memoDao = new MemoDao(this);
+        folderDao = new FolderDao(this);
+        // 根据folderid获取到folder对象
+        folderModel = folderDao.getFolderById(getIntent().getIntExtra(EXTRA_INT_FOLDERID,-1));
+        if (null != title){
+            BaseUtility.setText(title,folderModel.getFolderName());
+            BaseUtility.setText(tvMemoFolderActivityCounts,getString(R.string.MemoFolderActivity_counts,String.valueOf(folderModel.getFolderNumbers())));
+        }
         adapter = new MemoAdapter();
         adapter.setFolderItemClickListener(new FolderItemClickListener() {
             @Override

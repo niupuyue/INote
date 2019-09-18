@@ -1,5 +1,7 @@
 package com.paulniu.inote.data;
 
+import java.io.Serializable;
+
 /**
  * Coder: niupuyue
  * Date: 2019/8/15
@@ -7,7 +9,7 @@ package com.paulniu.inote.data;
  * Desc: 文件夹对象
  * Version:
  */
-public class FolderModel {
+public class FolderModel implements Serializable {
 
     private int folderId;
 
