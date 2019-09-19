@@ -8,12 +8,9 @@ import android.os.Build;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
-
 import com.niupuyue.mylibrary.base.BaseActivity;
 import com.niupuyue.mylibrary.utils.BaseUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
-import com.paulniu.inote.MainActivity;
 import com.paulniu.inote.R;
 import com.paulniu.inote.utils.BussinessUtils;
 import com.paulniu.inote.widget.SplashVideoView;

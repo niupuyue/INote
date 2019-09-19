@@ -10,13 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
-
 import com.bumptech.glide.Glide;
 import com.niupuyue.mylibrary.base.BaseActivity;
 import com.niupuyue.mylibrary.utils.BaseUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
-import com.paulniu.inote.MainActivity;
 import com.paulniu.inote.R;
 import com.paulniu.inote.data.standard.SplashModel;
 import com.paulniu.inote.utils.BussinessUtils;

@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.EditMemoActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.SplashActivity" />
         <activity android:name=".ui.MemoForFolderActivity" />
         <activity android:name=".ui.NewMemoActivity" />
