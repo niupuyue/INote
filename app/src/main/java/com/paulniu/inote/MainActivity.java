@@ -28,6 +28,8 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, FolderItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+    public static MainActivity mainActivity;
+
     private RecyclerView recyclerView;
     private TextView tvMainActivityCreateFolder;
     private FolderAdapter adapter;
@@ -60,6 +62,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void initDataAfterListener() {
+        mainActivity = this;
         folderDao = new FolderDao(this);
         adapter = new FolderAdapter();
         adapter.setFolderClickListener(this);

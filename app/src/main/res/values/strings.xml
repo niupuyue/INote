@@ -4,6 +4,9 @@
     <string name="app_cancel">取消</string>
     <string name="app_confirm">确定</string>
 
+    <!-- 闪屏页FirstActivity -->
+    <string name="FirstActivity_jump">跳过&#160;%ss</string>
+
     <!-- 欢迎页面SplashActivity -->
     <string name="SplashActivity_jump">跳过</string>
     <string name="SplashActivity_start_travel">开启记录之旅</string>

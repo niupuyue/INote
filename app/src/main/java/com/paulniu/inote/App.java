@@ -15,28 +15,24 @@ import com.niupuyue.mylibrary.utils.LibraryConstants;
  */
 public class App extends Application {
 
+    private static Context context;
+    private static Application application;
+
     public static Application getApplication() {
-        return getApplication();
+        return application;
     }
 
     public static Context getContext() {
-        return getContext();
+        return context;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
+        application = this;
         LibraryConstants.setContext(this);
-        // 初始化leakCanary
-//        initLeakCanary(this);
+
     }
 
-    public void initLeakCanary(Application app) {
-//        if (LeakCanary.isInAnalyzerProcess(app)) {
-//            // This process is dedicated to LeakCanary for heap analysis.
-//            // You should not init your app in this process.
-//            return;
-//        }
-//        LeakCanary.install(app);
-    }
 }

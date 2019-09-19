@@ -33,6 +33,7 @@
 
     <!-- 透明颜色 -->
     <color name="transparent">#00000000</color>
+    <color name="trans_A00">#A0000000</color>
 
     <!-- 灰色 -->
     <color name="grey_000">#FFFFFF</color>
