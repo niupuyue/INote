@@ -10,6 +10,31 @@
     <color name="color_divide">#e6e6e8</color>
     <color name="color_ccc">#CCCCCC</color>
 
+    <!-- 默认普通颜色 -->
+    <color name="gray">#666666</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#333333</color>
+    <color name="orange">#FFA500</color>
+    <color name="red">#FF0000</color>
+    <color name="gold">#FFD700</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="blue">#0000FF</color>
+    <color name="purple">#800080</color>
+    <color name="pink">#FFC0CB</color>
+    <color name="greens">#4cbfb5</color>
+    <color name="text_green">#00a496</color>
+    <color name="horizontal_line">#e5e5e5</color>
+    <color name="footer_text_color_selected">#00a496</color>
+    <color name="footer_text_color_normal">#c9c9c9</color>
+    <color name="light_gray">#999999</color>
+    <color name="app_bg">#f9f9f9</color>
+    <color name="pay_red">#e35151</color>
+    <color name="common_action_bar_splitter">#d2d2d2</color>
+
+    <!-- 透明颜色 -->
+    <color name="transparent">#00000000</color>
+
+    <!-- 灰色 -->
     <color name="grey_000">#FFFFFF</color>
     <color name="grey_050">#FAFAFA</color>
     <color name="grey_100">#F5F5F5</color>
@@ -21,4 +46,13 @@
     <color name="grey_700">#616161</color>
     <color name="grey_800">#424242</color>
     <color name="grey_900">#212121</color>
+
+    <!-- 红色 -->
+    <color name="red_3f42">#ce3f42</color>
+    <color name="red_4042">#ce4042</color>
+    <color name="red_4b4e">#f34b4e</color>
+    <color name="red_4d4e">#f34d4e</color>
+    <color name="red_4d52">#f04d52</color>
+    <color name="red_7d6a">#fc7d6a</color>
+    <color name="red_cece">#ffcece</color>
 </resources>

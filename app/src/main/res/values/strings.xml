@@ -4,6 +4,10 @@
     <string name="app_cancel">取消</string>
     <string name="app_confirm">确定</string>
 
+    <!-- 欢迎页面SplashActivity -->
+    <string name="SplashActivity_jump">跳过</string>
+    <string name="SplashActivity_start_travel">开启记录之旅</string>
+
     <!-- 主页面MainActivity -->
     <string name="MainActivity_create_floder">新建文件夹</string>
     <string name="MainActivity_floder_title">备忘录</string>
