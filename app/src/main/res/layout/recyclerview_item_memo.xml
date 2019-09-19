@@ -30,7 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="3333"
+            android:text=""
             android:textColor="@color/gray_666"
             android:textSize="14sp" />
 
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:singleLine="true"
-            android:text="123"
+            android:text=""
             android:textColor="@color/color_999"
             android:textSize="12sp" />
 

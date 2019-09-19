@@ -111,13 +111,13 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
                 if (position >= memoModelList.size()) {
                     return;
                 }
-                GeneralDialog.dialogWithTwoBtn(MemoForFolderActivity.this, "提示", "是否删除该备忘录?", new IBaseDialogClickCallback() {
+                GeneralDialog.dialogWithTwoBtn(MemoForFolderActivity.this, getString(R.string.MemoFolderActivity_tips), getString(R.string.MemoFolderActivity_tips_is_delete_memo), new IBaseDialogClickCallback() {
                     @Override
                     public void onClickPositive() {
                         // 删除备忘录
                         int count = memoDao.deleteMemo(memoModelList.get(position).getMemoId());
                         if (count > 0) {
-                            Toast.makeText(MemoForFolderActivity.this, "删除成功!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MemoForFolderActivity.this, getString(R.string.MemoFolderActivity_remarks_delete_memo_success), Toast.LENGTH_SHORT).show();
                             swipeRefresh.setRefreshing(true);
                             onRefresh();
                         }

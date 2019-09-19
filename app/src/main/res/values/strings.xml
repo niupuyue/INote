@@ -4,12 +4,27 @@
     <string name="app_cancel">取消</string>
     <string name="app_confirm">确定</string>
 
+    <!-- 主页面MainActivity -->
     <string name="MainActivity_create_floder">新建文件夹</string>
     <string name="MainActivity_floder_title">备忘录</string>
-    <string name="AddFolderDialog_title">新建文件夹</string>
-    <string name="AddFolderDialog_subtitle">请为此文件夹输入名称</string>
-    <string name="AddFolderDialog_hint">名称</string>
-    <string name="MemoFolderActivity_counts">%s个备忘录</string>
     <string name="MainActivity_delete_folder">是否删除该文件夹？</string>
+    <string name="MainActivity_tips">提示</string>
+    <string name="MainActivity_remarks_add_folder_success">插入成功！</string>
+    <string name="MainActivity_remarks_add_folder_fail">插入失败！</string>
+    <string name="MainActivity_remarks_delete_folder_success">删除成功！</string>
+    <string name="MainActivity_remarks_delete_folder_fail">删除失败！</string>
+
+    <!-- 备忘录列表MemoFolderActivity -->
+    <string name="MemoFolderActivity_counts">%s个备忘录</string>
+    <string name="MemoFolderActivity_tips">提示</string>
+    <string name="MemoFolderActivity_tips_is_delete_memo">是否删除该备忘录?</string>
+    <string name="MemoFolderActivity_remarks_delete_memo_success">删除成功!</string>
+
+    <!-- 新建备忘录NewMemoActivity -->
+    <string name="NewMemoActivity_add_new_memo">新建备忘录</string>
+    <string name="NewMemoActivity_tips">提示</string>
+    <string name="NewMemoActivity_close_without_save">关闭页面后文本将不会被保存...</string>
+    <string name="NewMemoActivity_remark_empty_title">标题不能为空</string>
+    <string name="NewMemoActivity_remark_save_success">保存成功</string>
 
 </resources>

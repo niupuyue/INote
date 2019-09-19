@@ -25,7 +25,7 @@ import java.util.List;
  * Coder: niupuyue
  * Date: 2019/9/18
  * Time: 18:19
- * Desc:
+ * Desc: 新建备忘录
  * Version:
  */
 public class NewMemoActivity extends BaseActivity implements View.OnClickListener {
@@ -74,7 +74,7 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
     public void initDataAfterListener() {
         folderId = getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1);
         folderName = getIntent().getStringExtra(EXTRA_STRING_FOLDERNAME);
-        BaseUtility.setText(title, "新建备忘录");
+        BaseUtility.setText(title, getString(R.string.NewMemoActivity_add_new_memo));
 
         memoDao = new MemoDao(this);
 
@@ -101,7 +101,7 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
     public void onBackPressed() {
         super.onBackPressed();
         if (!BaseUtility.isEmpty(BaseUtility.getText(et_new_title)) || !BaseUtility.isEmpty(getEditData())) {
-            GeneralDialog.dialogWithTwoBtn(NewMemoActivity.this, "提示", "关闭页面后文本将不会被保存...", new IBaseDialogClickCallback() {
+            GeneralDialog.dialogWithTwoBtn(NewMemoActivity.this, getString(R.string.NewMemoActivity_tips), getString(R.string.NewMemoActivity_close_without_save), new IBaseDialogClickCallback() {
                 @Override
                 public void onClickPositive() {
                     finish();
@@ -123,7 +123,7 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.save:
                 if (BaseUtility.isEmpty(BaseUtility.getText(et_new_title))) {
-                    Toast.makeText(NewMemoActivity.this, "标题不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewMemoActivity.this, getString(R.string.NewMemoActivity_remark_empty_title), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String title = BaseUtility.getText(et_new_title);
@@ -135,7 +135,7 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
                 long ret = memoDao.insertMemo(title, content, folderId);
                 if (ret > 0) {
                     // 保存成功
-                    Toast.makeText(NewMemoActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewMemoActivity.this, getString(R.string.NewMemoActivity_remark_save_success), Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 break;

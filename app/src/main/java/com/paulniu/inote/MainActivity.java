@@ -10,11 +10,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.niupuyue.mylibrary.base.BaseActivity;
-import com.niupuyue.mylibrary.callbacks.ISimpleDialogButtonClickCallback;
 import com.niupuyue.mylibrary.utils.BaseUtility;
 import com.niupuyue.mylibrary.utils.CustomToastUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
-import com.niupuyue.mylibrary.widgets.SimpleDialog;
 import com.paulniu.inote.adapter.FolderAdapter;
 import com.paulniu.inote.callback.AddFolderDialogListener;
 import com.paulniu.inote.callback.FolderItemClickListener;
@@ -24,7 +22,6 @@ import com.paulniu.inote.ui.MemoForFolderActivity;
 import com.paulniu.inote.widget.AddFolderDialog;
 import com.paulniu.library.GeneralDialog;
 import com.paulniu.library.callbacks.IBaseDialogClickCallback;
-import com.squareup.haha.perflib.Main;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +81,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onItemLongClick(View view, final int position) {
         if (!BaseUtility.isEmpty(folderModelList)) {
-            GeneralDialog.dialogWithTwoBtn(MainActivity.this, "提示", getString(R.string.MainActivity_delete_folder), new IBaseDialogClickCallback() {
+            GeneralDialog.dialogWithTwoBtn(MainActivity.this, getString(R.string.MainActivity_tips), getString(R.string.MainActivity_delete_folder), new IBaseDialogClickCallback() {
                 @Override
                 public void onClickPositive() {
                     // 删除该文件夹
@@ -123,11 +120,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void addFolder(String folderName) {
         long insertCount = folderDao.insertFolder(folderName);
         if (insertCount > 0) {
-            CustomToastUtility.makeTextSucess("插入成功！");
+            CustomToastUtility.makeTextSucess(getString(R.string.MainActivity_remarks_add_folder_success));
             swipeRefresh.setRefreshing(true);
             onRefresh();
         } else {
-            CustomToastUtility.makeTextError("插入失败！");
+            CustomToastUtility.makeTextError(getString(R.string.MainActivity_remarks_add_folder_fail));
         }
     }
 
@@ -137,11 +134,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void deleteFolder(FolderModel folderModel) {
         int ret = folderDao.deleteFolder(folderModel.getFolderId());
         if (ret > 0) {
-            CustomToastUtility.makeTextSucess("删除成功！");
+            CustomToastUtility.makeTextSucess(getString(R.string.MainActivity_remarks_delete_folder_success));
             swipeRefresh.setRefreshing(true);
             onRefresh();
         } else {
-            CustomToastUtility.makeTextError("删除失败！");
+            CustomToastUtility.makeTextError(getString(R.string.MainActivity_remarks_delete_folder_fail));
         }
     }
 
