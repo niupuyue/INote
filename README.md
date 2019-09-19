@@ -12,6 +12,8 @@
 
 [下载地址]()
 
+[apk下载](https://github.com/niupuyue/INote/blob/master/app/release/app-release.apk)
+
 [源码地址]()
 
 #### 2019年9月19日
