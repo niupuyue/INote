@@ -29,6 +29,9 @@
         <activity android:name=".ui.SplashActivity" />
         <activity android:name=".ui.MemoForFolderActivity" />
         <activity android:name=".ui.NewMemoActivity" />
+        <activity android:name=".ui.HomeActivity" />
+
+        <activity android:name=".TextActvity" />
     </application>
 
 </manifest>
