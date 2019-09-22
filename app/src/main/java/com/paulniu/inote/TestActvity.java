@@ -9,5 +9,5 @@ import androidx.appcompat.app.AppCompatActivity;
  * Desc: 测试Activity
  * Version:v0.0.1
  */
-public class TextActvity extends AppCompatActivity {
+public class TestActvity extends AppCompatActivity {
 }
