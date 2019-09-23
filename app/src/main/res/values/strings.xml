@@ -34,4 +34,7 @@
     <string name="NewMemoActivity_remark_empty_title">标题不能为空</string>
     <string name="NewMemoActivity_remark_save_success">保存成功</string>
 
+    <!-- 设置页面SettingActivity -->
+    <string name="SettingActivity_title">设置</string>
+
 </resources>
