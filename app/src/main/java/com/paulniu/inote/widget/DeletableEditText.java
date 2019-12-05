@@ -10,7 +10,6 @@ import android.widget.EditText;
 
 /**
  * 可删除的EditText，主要用途是处理软键盘回删按钮backSpace时回调OnKeyListener
- *
  */
 public class DeletableEditText extends EditText {
 

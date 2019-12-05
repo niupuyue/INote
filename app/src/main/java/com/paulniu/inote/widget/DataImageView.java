@@ -11,7 +11,6 @@ import android.widget.ImageView;
 
 /**
  * 自定义ImageView，可以存放Bitmap和Path等信息
- *
  */
 public class DataImageView extends ImageView {
 

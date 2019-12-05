@@ -30,11 +30,11 @@ public class SharedUtils {
     /**
      * 设置最后查看欢迎页的versionName
      */
-    public static void setShowSpalshVersion(String versionName){
+    public static void setShowSpalshVersion(String versionName) {
         try {
             SharedPreferences.Editor editor = getSharedPreferencesInstance().edit();
-            editor.putString(SHARED_LAST_SPLASH_VERSION_NAME,versionName).apply();
-        }catch (Exception ex){
+            editor.putString(SHARED_LAST_SPLASH_VERSION_NAME, versionName).apply();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -42,11 +42,11 @@ public class SharedUtils {
     /**
      * 获取最后一次查看欢迎页面的versionName
      */
-    public static String getShowSplashVersion(){
+    public static String getShowSplashVersion() {
         String versionName = "";
         try {
-            versionName = getSharedPreferencesInstance().getString(SHARED_LAST_SPLASH_VERSION_NAME,"");
-        }catch (Exception ex){
+            versionName = getSharedPreferencesInstance().getString(SHARED_LAST_SPLASH_VERSION_NAME, "");
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return versionName;
@@ -55,11 +55,11 @@ public class SharedUtils {
     /**
      * 设置广告ad对象
      */
-    public static void setSplashAdModel(SplashModel splashAdModel){
+    public static void setSplashAdModel(SplashModel splashAdModel) {
         try {
             SharedPreferences.Editor editor = getSharedPreferencesInstance().edit();
             editor.putString(SHARED_SPLASH_AD_MODEL, SpanStringUtility.serializeToString(splashAdModel)).apply();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -67,16 +67,16 @@ public class SharedUtils {
     /**
      * 获取广告ad对象
      */
-    public static SplashModel getSplashAdModel(){
+    public static SplashModel getSplashAdModel() {
         SplashModel splashModel = null;
         try {
-            splashModel = (SplashModel) SpanStringUtility.deSerializationToObject(getSharedPreferencesInstance().getString(SHARED_SPLASH_AD_MODEL,""));
+            splashModel = (SplashModel) SpanStringUtility.deSerializationToObject(getSharedPreferencesInstance().getString(SHARED_SPLASH_AD_MODEL, ""));
             // TODO 没有数据 暂时先写一个假数据
             splashModel = new SplashModel();
             splashModel.image = "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=173843264,1010023015&fm=26&gp=0.jpg";
             splashModel.localImage = "";
             splashModel.url = "http://www.paulniu.com";
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return splashModel;

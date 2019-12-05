@@ -12,5 +12,4 @@ import androidx.recyclerview.widget.RecyclerView;
 public class FolderRecyclerItemDecoration extends RecyclerView.ItemDecoration {
 
 
-
 }

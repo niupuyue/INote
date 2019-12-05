@@ -58,7 +58,9 @@ public class RichTextView extends ScrollView {
 
     private OnRtImageClickListener onRtImageClickListener;
 
-    /** 自定义属性 **/
+    /**
+     * 自定义属性
+     **/
     //插入的图片显示高度
     private int rtImageHeight = 0; //为0显示原始高度
     //两张相邻图片间距
@@ -104,19 +106,19 @@ public class RichTextView extends ScrollView {
         //setupLayoutTransitions();//禁止载入动画
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
-        allLayout.setPadding(50,15,50,15);//设置间距，防止生成图片时文字太靠边
+        allLayout.setPadding(50, 15, 50, 15);//设置间距，防止生成图片时文字太靠边
         addView(allLayout, layoutParams);
 
         btnListener = new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (v instanceof DataImageView){
+                if (v instanceof DataImageView) {
                     DataImageView imageView = (DataImageView) v;
                     //int currentItem = imagePaths.indexOf(imageView.getAbsolutePath());
                     //Toast.makeText(getContext(),"点击图片："+currentItem+"："+imageView.getAbsolutePath(), Toast.LENGTH_SHORT).show();
                     // 开放图片点击接口
-                    if (onRtImageClickListener != null){
+                    if (onRtImageClickListener != null) {
                         onRtImageClickListener.onRtImageClick(imageView, imageView.getAbsolutePath());
                     }
 
@@ -143,7 +145,7 @@ public class RichTextView extends ScrollView {
         return (int) (dipValue * m + 0.5f);
     }
 
-    public interface OnRtImageClickListener{
+    public interface OnRtImageClickListener {
         void onRtImageClick(View view, String imagePath);
     }
 
@@ -154,14 +156,14 @@ public class RichTextView extends ScrollView {
     /**
      * 清除所有的view
      */
-    public void clearAllLayout(){
+    public void clearAllLayout() {
         allLayout.removeAllViews();
     }
 
     /**
      * 获得最后一个子view的位置
      */
-    public int getLastIndex(){
+    public int getLastIndex() {
         int lastEditIndex = allLayout.getChildCount();
         return lastEditIndex;
     }
@@ -191,14 +193,15 @@ public class RichTextView extends ScrollView {
         closeView.setVisibility(GONE);
         DataImageView imageView = layout.findViewById(R.id.edit_imageView);
         //imageView.setTag(layout.getTag());
-		imageView.setOnClickListener(btnListener);
+        imageView.setOnClickListener(btnListener);
         return layout;
     }
 
     /**
      * 关键字高亮显示
-     * @param target  需要高亮的关键字
-     * @param text	     需要显示的文字
+     *
+     * @param target 需要高亮的关键字
+     * @param text   需要显示的文字
      * @return spannable 处理完后的结果，记得不要toString()，否则没有效果
      * SpannableStringBuilder textString = TextUtilTools.highlight(item.getItemName(), KnowledgeActivity.searchKey);
      * vHolder.tv_itemName_search.setText(textString);
@@ -227,7 +230,7 @@ public class RichTextView extends ScrollView {
     /**
      * 在特定位置插入EditText
      *
-     * @param index 位置
+     * @param index   位置
      * @param editStr EditText显示的文字
      */
     public void addTextViewAtIndex(final int index, CharSequence editStr) {
@@ -253,19 +256,19 @@ public class RichTextView extends ScrollView {
      * 在特定位置添加ImageView
      */
     public void addImageViewAtIndex(final int index, final String imagePath) {
-        if (TextUtils.isEmpty(imagePath)){
+        if (TextUtils.isEmpty(imagePath)) {
             return;
         }
         imagePaths.add(imagePath);
         RelativeLayout imageLayout = createImageLayout();
-        if (imageLayout == null){
+        if (imageLayout == null) {
             return;
         }
         final DataImageView imageView = (DataImageView) imageLayout.findViewById(R.id.edit_imageView);
         imageView.setAbsolutePath(imagePath);
 
         //如果是网络图片
-        if (imagePath.startsWith("http")){
+        if (imagePath.startsWith("http")) {
 
             Glide.with(getContext()).asBitmap().load(imagePath).dontAnimate()
                     .into(new SimpleTarget<Bitmap>() {
@@ -338,7 +341,7 @@ public class RichTextView extends ScrollView {
      * @param width view的宽度
      */
     public Bitmap getScaledBitmap(String filePath, int width) {
-        if (TextUtils.isEmpty(filePath)){
+        if (TextUtils.isEmpty(filePath)) {
             return null;
         }
         BitmapFactory.Options options = null;
