@@ -37,7 +37,11 @@ dependencies {
     api "com.orhanobut:logger:$rootProject.ext.dependencies.log"
     api "com.github.tbruyelle:rxpermissions:$rootProject.ext.dependencies.rxpermission"
     api "com.github.bumptech.glide:glide:$rootProject.ext.dependencies.glide"
+    api "android.arch.persistence.room:runtime:$rootProject.ext.dependencies.room"
+
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.ext.dependencies.room"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.dependencies.glide"
+
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.dependencies.leakcanary"
 }

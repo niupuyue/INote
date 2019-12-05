@@ -19,7 +19,8 @@ ext {
             log                  : '2.2.0',
             rxpermission         : '0.10.2',
             ydialog              : '1.0.0',
-            glide                : '4.9.0'
+            glide                : '4.9.0',
+            room                 : '1.1.1'
     ]
 }
 
