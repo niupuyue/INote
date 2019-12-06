@@ -10,9 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.niupuyue.mylibrary.utils.BaseUtility;
+import com.niupuyue.mylibrary.utils.TimeUtility;
 import com.paulniu.inote.R;
 import com.paulniu.inote.callback.FolderItemClickListener;
-import com.paulniu.inote.data.MemoModel;
+import com.paulniu.inote.db.entity.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.List;
 public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> implements View.OnClickListener, View.OnLongClickListener {
 
     private FolderItemClickListener listener;
-    private List<MemoModel> memoModels = new ArrayList<>();
+    private List<Note> memoModels = new ArrayList<>();
     private Context mContext;
 
     @NonNull
@@ -42,11 +43,11 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> im
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MemoModel model = memoModels.get(position);
+        Note model = memoModels.get(position);
         holder.itemView.setTag(position);
-        BaseUtility.setText(holder.memoTitle, model.getTitle());
-        BaseUtility.setText(holder.memoDate, model.getDate());
-        BaseUtility.setText(holder.memoContent, model.getContent());
+        BaseUtility.setText(holder.memoTitle, model.noteTitle);
+        BaseUtility.setText(holder.memoDate, TimeUtility.convertToString(model.updateTime));
+        BaseUtility.setText(holder.memoContent, model.noteContent);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder> im
         this.listener = listener;
     }
 
-    public void setMemoModels(List<MemoModel> models) {
+    public void setMemoModels(List<Note> models) {
         this.memoModels = models;
     }
 

@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.niupuyue.mylibrary.utils.BaseUtility;
 import com.paulniu.inote.R;
 import com.paulniu.inote.callback.FolderItemClickListener;
-import com.paulniu.inote.data.FolderModel;
+import com.paulniu.inote.db.entity.NoteFolder;
+import com.paulniu.inote.db.entity.NoteFolderWithNoteCount;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.List;
  */
 public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder> implements View.OnClickListener, View.OnLongClickListener {
 
-    private List<FolderModel> folderModels;
+    private List<NoteFolder> folderModels;
     private FolderItemClickListener listener;
     private Context mContext;
 
@@ -34,7 +35,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         folderModels = new ArrayList<>();
     }
 
-    public void setFolderModels(List<FolderModel> folders) {
+    public void setFolderModels(List<NoteFolder> folders) {
         this.folderModels = folders;
     }
 
@@ -54,10 +55,13 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FolderAdapter.ViewHolder holder, int position) {
-        FolderModel model = folderModels.get(position);
+        NoteFolder model = folderModels.get(position);
         holder.itemView.setTag(position);
-        BaseUtility.setText(holder.tv_recyclerview_item_folder_name, model.getFolderName());
-        BaseUtility.setText(holder.tv_recyclerview_item_folder_nums, mContext.getString(R.string.MemoFolderActivity_counts,String.valueOf(model.getFolderNumbers())));
+        BaseUtility.setText(holder.tv_recyclerview_item_folder_name,model.folderName);
+        if (model instanceof NoteFolderWithNoteCount){
+            NoteFolderWithNoteCount folderWithNoteCount = (NoteFolderWithNoteCount) model;
+            BaseUtility.setText(holder.tv_recyclerview_item_folder_nums, mContext.getString(R.string.MemoFolderActivity_counts,String.valueOf(folderWithNoteCount.noteCount)));
+        }
     }
 
     @Override
@@ -77,7 +81,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         }
     }
 
-    public void addData(int position, FolderModel folderModel) {
+    public void addData(int position, NoteFolder folderModel) {
         if (BaseUtility.isEmpty(folderModels)) {
             folderModels = new ArrayList<>();
         }

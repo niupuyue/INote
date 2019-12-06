@@ -2,7 +2,6 @@ package com.paulniu.inote.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,15 +15,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.niupuyue.mylibrary.base.BaseActivity;
 import com.niupuyue.mylibrary.utils.BaseUtility;
-import com.niupuyue.mylibrary.utils.CustomToastUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
 import com.paulniu.inote.R;
 import com.paulniu.inote.adapter.MemoAdapter;
 import com.paulniu.inote.callback.FolderItemClickListener;
-import com.paulniu.inote.data.FolderModel;
-import com.paulniu.inote.data.MemoModel;
-import com.paulniu.inote.db.FolderDao;
-import com.paulniu.inote.db.MemoDao;
+import com.paulniu.inote.db.FolderDaoSource;
+import com.paulniu.inote.db.NoteDaoSource;
+import com.paulniu.inote.db.entity.Note;
+import com.paulniu.inote.db.entity.NoteFolder;
+import com.paulniu.inote.db.entity.NoteFolderWithNoteCount;
 import com.paulniu.library.GeneralDialog;
 import com.paulniu.library.callbacks.IBaseDialogClickCallback;
 
@@ -43,9 +42,9 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
     private static final String EXTRA_INT_FOLDERID = "folderId";
     private static final String EXTRA_OBJECT_FOLDER = "folder";
 
-    public static Intent getIntent(Context context, FolderModel folderModel) {
+    public static Intent getIntent(Context context, NoteFolder folderModel) {
         Intent intent = new Intent(context, MemoForFolderActivity.class);
-        intent.putExtra(EXTRA_INT_FOLDERID, folderModel.getFolderId());
+        intent.putExtra(EXTRA_INT_FOLDERID, folderModel.id);
         return intent;
     }
 
@@ -56,11 +55,9 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
     private ImageView ivMeomoFolderActivityAddmemo;
     private SwipeRefreshLayout swipeRefresh;
 
-    private List<MemoModel> memoModelList = new ArrayList<>();
+    private List<Note> notes = new ArrayList<>();
     private MemoAdapter adapter;
-    private FolderModel folderModel;
-    private FolderDao folderDao;
-    private MemoDao memoDao;
+    private NoteFolder folderModel;
     private Handler mHandler = new Handler();
 
     @Override
@@ -89,13 +86,14 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void initDataAfterListener() {
-        memoDao = new MemoDao(this);
-        folderDao = new FolderDao(this);
         // 根据folderid获取到folder对象
-        folderModel = folderDao.getFolderById(getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1));
+        folderModel = FolderDaoSource.getFolderByFolderId(getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1));
         if (null != title) {
-            BaseUtility.setText(title, folderModel.getFolderName());
-            BaseUtility.setText(tvMemoFolderActivityCounts, getString(R.string.MemoFolderActivity_counts, String.valueOf(folderModel.getFolderNumbers())));
+            BaseUtility.setText(title, folderModel.folderName);
+            if (folderModel instanceof NoteFolderWithNoteCount){
+                NoteFolderWithNoteCount folderWithNoteCount = (NoteFolderWithNoteCount) folderModel;
+                BaseUtility.setText(tvMemoFolderActivityCounts, getString(R.string.MemoFolderActivity_counts, String.valueOf(folderWithNoteCount.noteCount)));
+            }
         }
         adapter = new MemoAdapter();
         adapter.setFolderItemClickListener(new FolderItemClickListener() {
@@ -108,19 +106,21 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onItemLongClick(View view, final int position) {
-                if (position >= memoModelList.size()) {
+                if (position >= notes.size()) {
                     return;
                 }
                 GeneralDialog.dialogWithTwoBtn(MemoForFolderActivity.this, getString(R.string.MemoFolderActivity_tips), getString(R.string.MemoFolderActivity_tips_is_delete_memo), new IBaseDialogClickCallback() {
                     @Override
                     public void onClickPositive() {
                         // 删除备忘录
-                        int count = memoDao.deleteMemo(memoModelList.get(position).getMemoId());
-                        if (count > 0) {
-                            Toast.makeText(MemoForFolderActivity.this, getString(R.string.MemoFolderActivity_remarks_delete_memo_success), Toast.LENGTH_SHORT).show();
-                            swipeRefresh.setRefreshing(true);
-                            onRefresh();
+                        try {
+                            NoteDaoSource.delete(notes.get(position));
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
+                        Toast.makeText(MemoForFolderActivity.this, getString(R.string.MemoFolderActivity_remarks_delete_memo_success), Toast.LENGTH_SHORT).show();
+                        swipeRefresh.setRefreshing(true);
+                        onRefresh();
                     }
 
                     @Override
@@ -130,8 +130,8 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
                 });
             }
         });
-        memoModelList = memoDao.getMemoByFolderId(folderModel.getFolderId());
-        adapter.setMemoModels(memoModelList);
+        notes = NoteDaoSource.getNotesByFolder(getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1));
+        adapter.setMemoModels(notes);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerview.addItemDecoration(dividerItemDecoration);
@@ -145,9 +145,9 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
                 @Override
                 public void run() {
                     // 清空原有数据
-                    memoModelList.clear();
-                    memoModelList = memoDao.getMemoByFolderId(folderModel.getFolderId());
-                    adapter.setMemoModels(memoModelList);
+                    notes.clear();
+                    notes = NoteDaoSource.getNotesByFolder(getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1));
+                    adapter.setMemoModels(notes);
                     adapter.notifyDataSetChanged();
                     swipeRefresh.setRefreshing(false);
                 }
@@ -163,7 +163,7 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.ivMeomoFolderActivityAddmemo:
                 // 新建一个备忘录
-                Intent intent = NewMemoActivity.getInstance(MemoForFolderActivity.this,folderModel);
+                Intent intent = NewMemoActivity.getInstance(MemoForFolderActivity.this, folderModel);
                 startActivity(intent);
                 break;
         }

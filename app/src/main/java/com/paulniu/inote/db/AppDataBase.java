@@ -6,8 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import com.paulniu.inote.db.dao.FolderDao;
+import com.paulniu.inote.db.dao.NoteDao;
+import com.paulniu.inote.db.entity.Note;
+import com.paulniu.inote.db.entity.NoteFolder;
 
 /**
  * Coder: niupuyue
@@ -16,10 +22,15 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * Desc:
  * Version:
  */
-@Database(entities = {}, version = 1)
+@Database(entities = {NoteFolder.class, Note.class}, version = 1)
+@TypeConverters({})
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE;
+
+    public abstract FolderDao noteFolderDao();
+
+    public abstract NoteDao noteDao();
 
     /**
      *  此处填写数据表需要的dao文件

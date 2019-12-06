@@ -17,8 +17,8 @@ import com.paulniu.inote.R;
 import com.paulniu.inote.adapter.FolderAdapter;
 import com.paulniu.inote.callback.AddFolderDialogListener;
 import com.paulniu.inote.callback.FolderItemClickListener;
-import com.paulniu.inote.data.FolderModel;
-import com.paulniu.inote.db.FolderDao;
+import com.paulniu.inote.db.FolderDaoSource;
+import com.paulniu.inote.db.entity.NoteFolder;
 import com.paulniu.inote.widget.AddFolderDialog;
 import com.paulniu.library.GeneralDialog;
 import com.paulniu.library.callbacks.IBaseDialogClickCallback;
@@ -33,8 +33,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private RecyclerView recyclerView;
     private TextView tvMainActivityCreateFolder;
     private FolderAdapter adapter;
-    private List<FolderModel> folderModelList = new ArrayList<>();
-    private FolderDao folderDao;
+    private List<NoteFolder> folderModelList = new ArrayList<>();
     private SwipeRefreshLayout swipeRefresh;
 
     private Handler mHandler = new Handler();
@@ -63,10 +62,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void initDataAfterListener() {
         mainActivity = this;
-        folderDao = new FolderDao(this);
         adapter = new FolderAdapter();
         adapter.setFolderClickListener(this);
-        folderModelList = folderDao.getAllFolders();
+        folderModelList = FolderDaoSource.getAllFolder();
         adapter.setFolderModels(folderModelList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -121,28 +119,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * @param folderName
      */
     private void addFolder(String folderName) {
-        long insertCount = folderDao.insertFolder(folderName);
-        if (insertCount > 0) {
-            CustomToastUtility.makeTextSucess(getString(R.string.MainActivity_remarks_add_folder_success));
-            swipeRefresh.setRefreshing(true);
-            onRefresh();
-        } else {
+        try {
+            NoteFolder folder = new NoteFolder();
+            folder.createTime = System.currentTimeMillis();
+            folder.folderName = folderName;
+            FolderDaoSource.addOrUpdate(folder);
+        } catch (Exception ex) {
+            ex.printStackTrace();
             CustomToastUtility.makeTextError(getString(R.string.MainActivity_remarks_add_folder_fail));
         }
+        CustomToastUtility.makeTextSucess(getString(R.string.MainActivity_remarks_add_folder_success));
+        swipeRefresh.setRefreshing(true);
+        onRefresh();
     }
 
     /**
      * 删除文件夹
      */
-    private void deleteFolder(FolderModel folderModel) {
-        int ret = folderDao.deleteFolder(folderModel.getFolderId());
-        if (ret > 0) {
-            CustomToastUtility.makeTextSucess(getString(R.string.MainActivity_remarks_delete_folder_success));
-            swipeRefresh.setRefreshing(true);
-            onRefresh();
-        } else {
+    private void deleteFolder(NoteFolder folderModel) {
+
+        try {
+            FolderDaoSource.delete(folderModel);
+        } catch (Exception ex) {
+            ex.printStackTrace();
             CustomToastUtility.makeTextError(getString(R.string.MainActivity_remarks_delete_folder_fail));
         }
+        CustomToastUtility.makeTextSucess(getString(R.string.MainActivity_remarks_delete_folder_success));
+        swipeRefresh.setRefreshing(true);
+        onRefresh();
     }
 
     @Override
@@ -153,7 +157,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 public void run() {
                     // 清空原有数据
                     folderModelList.clear();
-                    folderModelList = folderDao.getAllFolders();
+                    folderModelList = FolderDaoSource.getAllFolder();
                     adapter.setFolderModels(folderModelList);
                     adapter.notifyDataSetChanged();
                     swipeRefresh.setRefreshing(false);

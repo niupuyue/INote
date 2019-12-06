@@ -12,9 +12,9 @@ import com.niupuyue.mylibrary.base.BaseActivity;
 import com.niupuyue.mylibrary.utils.BaseUtility;
 import com.niupuyue.mylibrary.utils.ListenerUtility;
 import com.paulniu.inote.R;
-import com.paulniu.inote.data.FolderModel;
-import com.paulniu.inote.data.MemoModel;
-import com.paulniu.inote.db.MemoDao;
+import com.paulniu.inote.db.NoteDaoSource;
+import com.paulniu.inote.db.entity.Note;
+import com.paulniu.inote.db.entity.NoteFolder;
 import com.paulniu.inote.widget.RichTextEditor;
 import com.paulniu.library.GeneralDialog;
 import com.paulniu.library.callbacks.IBaseDialogClickCallback;
@@ -39,15 +39,14 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
     private EditText et_new_title;
     private RichTextEditor et_new_content;
 
-    private MemoDao memoDao;
-    private MemoModel memoModel = new MemoModel();
+    private Note memoModel = new Note();
     private int folderId;
     private String folderName;
 
-    public static Intent getInstance(Context context, FolderModel folderModel) {
+    public static Intent getInstance(Context context, NoteFolder folderModel) {
         Intent intent = new Intent(context, NewMemoActivity.class);
-        intent.putExtra(EXTRA_INT_FOLDERID, folderModel.getFolderId());
-        intent.putExtra(EXTRA_STRING_FOLDERNAME, folderModel.getFolderName());
+        intent.putExtra(EXTRA_INT_FOLDERID, folderModel.id);
+        intent.putExtra(EXTRA_STRING_FOLDERNAME, folderModel.folderName);
         return intent;
     }
 
@@ -75,8 +74,6 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
         folderId = getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1);
         folderName = getIntent().getStringExtra(EXTRA_STRING_FOLDERNAME);
         BaseUtility.setText(title, getString(R.string.NewMemoActivity_add_new_memo));
-
-        memoDao = new MemoDao(this);
 
     }
 
@@ -128,16 +125,19 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
                 }
                 String title = BaseUtility.getText(et_new_title);
                 String content = getEditData();
-                memoModel.setTitle(title);
-                memoModel.setContent(content);
-                memoModel.setDate(String.valueOf(System.currentTimeMillis()));
-                memoModel.setFolderId(folderId);
-                long ret = memoDao.insertMemo(title, content, folderId);
-                if (ret > 0) {
-                    // 保存成功
-                    Toast.makeText(NewMemoActivity.this, getString(R.string.NewMemoActivity_remark_save_success), Toast.LENGTH_SHORT).show();
-                    finish();
+                memoModel.noteTitle = title;
+                memoModel.noteContent = content;
+                memoModel.updateTime = System.currentTimeMillis();
+                memoModel.folderId = folderId;
+                memoModel.createTime = memoModel.updateTime;
+                try {
+                    NoteDaoSource.addOrUpdate(memoModel);
+                }catch (Exception ex){
+                    ex.printStackTrace();
                 }
+                // 保存成功
+                Toast.makeText(NewMemoActivity.this, getString(R.string.NewMemoActivity_remark_save_success), Toast.LENGTH_SHORT).show();
+                finish();
                 break;
         }
     }

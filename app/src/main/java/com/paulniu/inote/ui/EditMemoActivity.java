@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.niupuyue.mylibrary.base.BaseActivity;
 import com.paulniu.inote.R;
-import com.paulniu.inote.data.MemoModel;
+import com.paulniu.inote.db.entity.Note;
 
 /**
  * Coder: niupuyue
@@ -19,9 +19,9 @@ public class EditMemoActivity extends BaseActivity implements View.OnClickListen
 
     public static final String EXTRA_INT_MEMOID = "memoId";
 
-    public static Intent getIntent(Context context, MemoModel memoModel) {
+    public static Intent getIntent(Context context, Note memoModel) {
         Intent intent = new Intent(context, EditMemoActivity.class);
-        intent.putExtra(EXTRA_INT_MEMOID, memoModel.getMemoId());
+        intent.putExtra(EXTRA_INT_MEMOID, memoModel.id);
         return intent;
     }
 
