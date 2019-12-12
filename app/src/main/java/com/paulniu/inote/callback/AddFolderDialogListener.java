@@ -9,5 +9,6 @@ package com.paulniu.inote.callback;
  */
 public interface AddFolderDialogListener {
     void onAddFolderConfirm(String folderName);
+
     void onAddFolderCancel();
 }

@@ -132,7 +132,7 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
                 memoModel.createTime = memoModel.updateTime;
                 try {
                     NoteDaoSource.addOrUpdate(memoModel);
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 // 保存成功

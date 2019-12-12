@@ -90,7 +90,7 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
         folderModel = FolderDaoSource.getFolderByFolderId(getIntent().getLongExtra(EXTRA_INT_FOLDERID, -1));
         if (null != title) {
             BaseUtility.setText(title, folderModel.folderName);
-            if (folderModel instanceof NoteFolderWithNoteCount){
+            if (folderModel instanceof NoteFolderWithNoteCount) {
                 NoteFolderWithNoteCount folderWithNoteCount = (NoteFolderWithNoteCount) folderModel;
                 BaseUtility.setText(tvMemoFolderActivityCounts, getString(R.string.MemoFolderActivity_counts, String.valueOf(folderWithNoteCount.noteCount)));
             }
