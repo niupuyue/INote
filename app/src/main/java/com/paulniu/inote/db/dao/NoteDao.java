@@ -67,7 +67,7 @@ public abstract class NoteDao {
             return;
         }
         Note oldNote = getNoteById(note.id);
-        if (oldNote == null || oldNote.id < 0) {
+        if (oldNote == null || oldNote.id <= 0) {
             insert(note);
         } else {
             note.id = oldNote.id;

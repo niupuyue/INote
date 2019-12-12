@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -8,34 +8,55 @@
     android:paddingRight="2dp"
     android:paddingBottom="13dp">
 
-    <!-- 文件夹列表item -->
-    <TextView
-        android:id="@+id/tv_recyclerview_item_folder_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:text=""
-        android:textColor="@color/color_333"
-        android:textSize="16sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/iv_recyclerview_item_folder_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/arrow_right" />
+        <!-- 文件夹列表item -->
+        <TextView
+            android:id="@+id/tv_recyclerview_item_folder_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="文件夹名"
+            android:textColor="@color/color_333"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/tv_recyclerview_item_folder_nums"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@id/iv_recyclerview_item_folder_right"
-        android:text=""
-        android:textColor="@color/color_333"
-        android:textSize="14sp" />
+        <ImageView
+            android:id="@+id/iv_recyclerview_item_folder_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arrow_right" />
+
+        <TextView
+            android:id="@+id/tv_recyclerview_item_folder_nums"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/iv_recyclerview_item_folder_right"
+            android:text="数量"
+            android:textColor="@color/color_333"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_recyclerview_item_folder_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="2019年12月12日" />
+
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -122,6 +122,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         try {
             NoteFolder folder = new NoteFolder();
             folder.createTime = System.currentTimeMillis();
+            folder.updateTime = folder.createTime;
             folder.folderName = folderName;
             FolderDaoSource.addOrUpdate(folder);
         } catch (Exception ex) {

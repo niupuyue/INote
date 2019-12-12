@@ -87,7 +87,7 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
     @Override
     public void initDataAfterListener() {
         // 根据folderid获取到folder对象
-        folderModel = FolderDaoSource.getFolderByFolderId(getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1));
+        folderModel = FolderDaoSource.getFolderByFolderId(getIntent().getLongExtra(EXTRA_INT_FOLDERID, -1));
         if (null != title) {
             BaseUtility.setText(title, folderModel.folderName);
             if (folderModel instanceof NoteFolderWithNoteCount){
@@ -130,7 +130,7 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
                 });
             }
         });
-        notes = NoteDaoSource.getNotesByFolder(getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1));
+        notes = NoteDaoSource.getNotesByFolder(getIntent().getLongExtra(EXTRA_INT_FOLDERID, -1));
         adapter.setMemoModels(notes);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -146,7 +146,7 @@ public class MemoForFolderActivity extends BaseActivity implements View.OnClickL
                 public void run() {
                     // 清空原有数据
                     notes.clear();
-                    notes = NoteDaoSource.getNotesByFolder(getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1));
+                    notes = NoteDaoSource.getNotesByFolder(getIntent().getLongExtra(EXTRA_INT_FOLDERID, -1));
                     adapter.setMemoModels(notes);
                     adapter.notifyDataSetChanged();
                     swipeRefresh.setRefreshing(false);

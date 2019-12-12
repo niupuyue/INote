@@ -3,7 +3,6 @@ package com.paulniu.inote.db;
 import android.text.TextUtils;
 
 import com.paulniu.inote.App;
-import com.paulniu.inote.db.entity.Note;
 import com.paulniu.inote.db.entity.NoteFolder;
 import com.paulniu.inote.db.entity.NoteFolderWithNoteCount;
 

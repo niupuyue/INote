@@ -80,7 +80,7 @@ public abstract class FolderDao {
             return;
         }
         NoteFolder olderFolder = getNoteFolderByFolderId(folder.id);
-        if (olderFolder == null || olderFolder.id < 0) {
+        if (olderFolder == null || olderFolder.id <= 0) {
             insert(folder);
         } else {
             folder.id = olderFolder.id;

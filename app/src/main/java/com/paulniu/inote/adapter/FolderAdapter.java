@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.niupuyue.mylibrary.utils.BaseUtility;
+import com.niupuyue.mylibrary.utils.TimeUtility;
 import com.paulniu.inote.R;
 import com.paulniu.inote.callback.FolderItemClickListener;
 import com.paulniu.inote.db.entity.NoteFolder;
@@ -57,10 +58,11 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
     public void onBindViewHolder(@NonNull FolderAdapter.ViewHolder holder, int position) {
         NoteFolder model = folderModels.get(position);
         holder.itemView.setTag(position);
-        BaseUtility.setText(holder.tv_recyclerview_item_folder_name,model.folderName);
-        if (model instanceof NoteFolderWithNoteCount){
+        BaseUtility.setText(holder.tv_recyclerview_item_folder_name, model.folderName);
+        if (model instanceof NoteFolderWithNoteCount) {
             NoteFolderWithNoteCount folderWithNoteCount = (NoteFolderWithNoteCount) model;
-            BaseUtility.setText(holder.tv_recyclerview_item_folder_nums, mContext.getString(R.string.MemoFolderActivity_counts,String.valueOf(folderWithNoteCount.noteCount)));
+            BaseUtility.setText(holder.tv_recyclerview_item_folder_nums, mContext.getString(R.string.MemoFolderActivity_counts, String.valueOf(folderWithNoteCount.noteCount)));
+            BaseUtility.setText(holder.tv_recyclerview_item_folder_time, TimeUtility.convertToString(model.updateTime == 0 ? model.createTime : model.updateTime));
         }
     }
 
@@ -73,11 +75,13 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
 
         public TextView tv_recyclerview_item_folder_name;
         public TextView tv_recyclerview_item_folder_nums;
+        public TextView tv_recyclerview_item_folder_time;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_recyclerview_item_folder_name = itemView.findViewById(R.id.tv_recyclerview_item_folder_name);
             tv_recyclerview_item_folder_nums = itemView.findViewById(R.id.tv_recyclerview_item_folder_nums);
+            tv_recyclerview_item_folder_time = itemView.findViewById(R.id.tv_recyclerview_item_folder_time);
         }
     }
 
@@ -85,7 +89,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         if (BaseUtility.isEmpty(folderModels)) {
             folderModels = new ArrayList<>();
         }
-        if (position < 0){
+        if (position < 0) {
             position = BaseUtility.isEmpty(folderModels) ? 0 : BaseUtility.size(folderModels) - 1;
         }
         folderModels.add(position, folderModel);

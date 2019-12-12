@@ -40,7 +40,7 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
     private RichTextEditor et_new_content;
 
     private Note memoModel = new Note();
-    private int folderId;
+    private long folderId;
     private String folderName;
 
     public static Intent getInstance(Context context, NoteFolder folderModel) {
@@ -71,7 +71,7 @@ public class NewMemoActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initDataAfterListener() {
-        folderId = getIntent().getIntExtra(EXTRA_INT_FOLDERID, -1);
+        folderId = getIntent().getLongExtra(EXTRA_INT_FOLDERID, -1);
         folderName = getIntent().getStringExtra(EXTRA_STRING_FOLDERNAME);
         BaseUtility.setText(title, getString(R.string.NewMemoActivity_add_new_memo));
 
